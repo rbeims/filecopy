@@ -5,6 +5,9 @@ use strict;
 use XML::Simple;
 use Data::Dumper;
 use Time::Piece;
+
+use YAML;
+
 use threads;
 
 my $download_output = 0;
@@ -13,7 +16,7 @@ sub downloader_thread {
   my $i = 0;
   print "Downloader Thread\n";
   while ($i < 5) {
-    sleep (1);
+    #    sleep (1);
     if ($download_output) {
       print "*";
     }
@@ -63,10 +66,10 @@ my $thr = threads->create({ 'context' => 'list',
 
 print "Enter Description: \n";
 my $desc;
-while (<STDIN>) {
-    last if /^END$/;
-    $desc .= $_;
-}
+##while (<STDIN>) {
+##    last if /^END$/;
+##    $desc .= $_;
+##}
 
 print "Desc: $desc\n";
 $download_output = 1;
@@ -102,3 +105,10 @@ my $dataDownload = {
 $xmlout = XMLout($dataDownload);
 
 print "$xmlout";
+
+my $ymlout = Dump($dataDownload);
+print $ymlout;
+
+my $ymlin = Load($ymlout);
+
+print Dumper($ymlin);
